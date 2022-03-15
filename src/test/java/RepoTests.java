@@ -35,8 +35,8 @@ public class RepoTests {
                 .shouldHave(text("fixtures"));
     }
 
-    @MethodSource("positiveChecks")
     @DisplayName("Поиск в релизах")
+    @MethodSource("positiveChecks")
     @ParameterizedTest(name = "{displayName} {0}")
     public void shouldSearchReleasesTest(String type, String searchData, String releaseName){
         TestPages.repoPage.releasesLink()
