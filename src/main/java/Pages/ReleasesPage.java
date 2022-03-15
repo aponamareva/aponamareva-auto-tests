@@ -16,7 +16,7 @@ public class ReleasesPage {
         return $(".subnav-search-input").as("инпут поиска");
     }
 
-    public ElementsCollection releaseCard() {
-        return $$("[data-test-selector='release-card']"); //карточка релиза
+    public ElementsCollection releaseCards() {
+        return $$("[data-test-selector='release-card']"); //карточки релизов
     }
 }

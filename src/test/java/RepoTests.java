@@ -36,8 +36,8 @@ public class RepoTests {
     }
 
     @MethodSource("positiveChecks")
-    @ParameterizedTest(name = "{displayName} {0}")
     @DisplayName("Поиск в релизах")
+    @ParameterizedTest(name = "{displayName} {0}")
     public void shouldSearchReleasesTest(String type, String searchData, String releaseName){
         TestPages.repoPage.releasesLink()
                 .click();
@@ -46,7 +46,7 @@ public class RepoTests {
         TestPages.releasesPage.searchInput()
                 .setValue(searchData)
                 .pressEnter();
-        TestPages.releasesPage.releaseCard()
+        TestPages.releasesPage.releaseCards()
                 .get(0)
                 .shouldBe(visible)
                 .shouldHave(text(releaseName));
