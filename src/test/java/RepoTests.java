@@ -1,4 +1,6 @@
-import com.codeborne.selenide.Condition;
+import io.qameta.allure.Feature;
+import io.qameta.allure.Owner;
+import io.qameta.allure.Story;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -11,9 +13,13 @@ import java.util.stream.Stream;
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.*;
+import static io.qameta.allure.Allure.step;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 
 public class RepoTests {
+
+    @Owner("APonamareva")
+    @Feature("Страница репозитория")
 
     @BeforeEach
     public void before() {
@@ -23,33 +29,50 @@ public class RepoTests {
     }
     
     @Test
+    @Story("Переключение веток")
     @DisplayName("Переключение на ветку fixtures")
     public void shouldSwitchBranchTest(){
+        step("Открыть модалку переключения веток", () -> {
+
+        });
         TestPages.repoPage.switchBranchesButton()
                 .click();
         TestPages.repoPage.modalBranches()
                 .shouldBe(visible);
+        step("Переключиться на ветку fixtures", () -> {
+
+        });
         TestPages.repoPage.fixtureBranch()
                 .click();
+        step("Проверить, что ветка корректная", () -> {
+
+        });
         TestPages.repoPage.switchBranchesButton()
                 .shouldHave(text("fixtures"));
     }
 
     @DisplayName("Поиск в релизах")
     @MethodSource("positiveChecks")
+    @Story("Страница релизов и тэгов")
     @ParameterizedTest(name = "{displayName} {0}")
     public void shouldSearchReleasesTest(String type, String searchData, String releaseName){
-        TestPages.repoPage.releasesLink()
-                .click();
-        TestPages.releasesPage.switchReleasesTagsButton()
-                .shouldBe(visible);
-        TestPages.releasesPage.searchInput()
-                .setValue(searchData)
-                .pressEnter();
-        TestPages.releasesPage.releaseCards()
-                .get(0)
-                .shouldBe(visible)
-                .shouldHave(text(releaseName));
+        step("Открыть страницу релизов", () -> {
+            TestPages.repoPage.releasesLink()
+                    .click();
+            TestPages.releasesPage.switchReleasesTagsButton()
+                    .shouldBe(visible);
+        });
+        step("Ввести данные в поисковую строку", () -> {
+            TestPages.releasesPage.searchInput()
+                    .setValue(searchData)
+                    .pressEnter();
+        });
+        step("Проверить, что результаты соответствуют поиску", () -> {
+            TestPages.releasesPage.releaseCards()
+                    .get(0)
+                    .shouldBe(visible)
+                    .shouldHave(text(releaseName));
+        });
     }
 
     static Stream<Arguments> positiveChecks() {
