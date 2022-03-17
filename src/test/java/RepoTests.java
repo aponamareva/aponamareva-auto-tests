@@ -33,22 +33,19 @@ public class RepoTests {
     @DisplayName("Переключение на ветку fixtures")
     public void shouldSwitchBranchTest(){
         step("Открыть модалку переключения веток", () -> {
-
+            TestPages.repoPage.switchBranchesButton()
+                    .click();
+            TestPages.repoPage.modalBranches()
+                    .shouldBe(visible);
         });
-        TestPages.repoPage.switchBranchesButton()
-                .click();
-        TestPages.repoPage.modalBranches()
-                .shouldBe(visible);
         step("Переключиться на ветку fixtures", () -> {
-
+            TestPages.repoPage.fixtureBranch()
+                    .click();
         });
-        TestPages.repoPage.fixtureBranch()
-                .click();
         step("Проверить, что ветка корректная", () -> {
-
+            TestPages.repoPage.switchBranchesButton()
+                    .shouldHave(text("fixtures"));
         });
-        TestPages.repoPage.switchBranchesButton()
-                .shouldHave(text("fixtures"));
     }
 
     @DisplayName("Поиск в релизах")
